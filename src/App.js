@@ -3,7 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import './App.css';
 
-const API_URL = 'http://localhost:8000';
+const API_URL = (
+  process.env.REACT_APP_API_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  'https://merciless-admiral-rag-gpt-backend.hf.space'
+).replace(/\/$/, '');
 
 // ── TYPEWRITER HOOK ──────────────────────────────────────────────
 // Uses a ref for the index to avoid stale-closure bugs that cause
