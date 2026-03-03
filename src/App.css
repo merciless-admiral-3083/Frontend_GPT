@@ -254,17 +254,18 @@ body {
 .welcome-orb {
   width: 80px; height: 80px;
   border-radius: 22px;
-  background: linear-gradient(135deg, #1D4ED8, #38BDF8);
+  background: var(--surface2);
+  border: 1px solid var(--border-lit);
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   margin-bottom: 2rem;
-  box-shadow: 0 0 60px rgba(56,189,248,0.25), 0 0 0 1px rgba(56,189,248,0.15);
+  box-shadow: 0 0 24px rgba(56,189,248,0.18);
   animation: orbFloat 4s ease-in-out infinite;
 }
 .welcome-orb-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
 }
 @keyframes orbFloat {
   0%, 100% { transform: translateY(0) rotate(0deg); }
