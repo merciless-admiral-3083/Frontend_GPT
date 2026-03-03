@@ -9,6 +9,8 @@ const API_URL = (
   'https://merciless-admiral-rag-gpt-backend.hf.space'
 ).replace(/\/$/, '');
 
+const WELCOME_ORB_IMAGE = process.env.REACT_APP_WELCOME_IMAGE || '/welcome-orb.svg';
+
 // ── TYPEWRITER HOOK ──────────────────────────────────────────────
 // Uses a ref for the index to avoid stale-closure bugs that cause
 // characters to be read from the wrong position (e.g. "he" instead of "the")
@@ -134,7 +136,7 @@ const WelcomeScreen = ({ suggestions, onSuggest }) => (
       animate={{ y: [0, -10, 0] }}
       transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
     >
-      🤖
+      <img src={WELCOME_ORB_IMAGE} alt="Assistant" className="welcome-orb-image" />
     </motion.div>
 
     <motion.h2
