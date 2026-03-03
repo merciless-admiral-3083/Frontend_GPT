@@ -9,7 +9,7 @@ const API_URL = (
   'https://merciless-admiral-rag-gpt-backend.hf.space'
 ).replace(/\/$/, '');
 
-const WELCOME_ORB_IMAGE = process.env.REACT_APP_WELCOME_IMAGE || '/welcome-orb.svg';
+const WELCOME_ORB_IMAGE = '/favicon.ico';
 
 // ── TYPEWRITER HOOK ──────────────────────────────────────────────
 // Uses a ref for the index to avoid stale-closure bugs that cause
