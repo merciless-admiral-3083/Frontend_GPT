@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 import './App.css';
-
+import { Analytics } from "@vercel/analytics/react"
 const API_URL = (
   process.env.REACT_APP_API_URL ||
   process.env.NEXT_PUBLIC_API_URL ||
@@ -364,6 +364,7 @@ export default function App() {
           )}
         </div>
       </main>
+      <Analytics />
     </div>
   );
 }
