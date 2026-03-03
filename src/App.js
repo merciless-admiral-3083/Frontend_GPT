@@ -142,7 +142,7 @@ const WelcomeScreen = ({ suggestions, onSuggest }) => (
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.15 }}
     >
-      Hi, I'm <span>RAG-GPT</span>
+      Hi, I'm <span>EverydayGPT</span>
     </motion.h2>
 
     <motion.p
@@ -152,7 +152,7 @@ const WelcomeScreen = ({ suggestions, onSuggest }) => (
       transition={{ delay: 0.25 }}
     >
       Powered by a <strong>200M parameter GPT model</strong> with retrieval-augmented
-      generation. Ask me anything from my knowledge base of <strong>tons of facts</strong>.
+      generation. Ask me anything from my knowledge base of <strong>tons of facts</strong>!
     </motion.p>
 
     <motion.div
@@ -273,7 +273,7 @@ export default function App() {
         <div className="nav-brand">
           <div className="brand-orb">🤖</div>
           <div className="brand-text">
-            <h1>RAG-GPT</h1>
+            <h1>EverydayGPT</h1>
             <p>Intelligent Assistant</p>
           </div>
         </div>
