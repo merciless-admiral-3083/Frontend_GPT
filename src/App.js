@@ -12,8 +12,6 @@ const API_URL = (
 const WELCOME_ORB_IMAGE = process.env.REACT_APP_WELCOME_IMAGE || `${process.env.PUBLIC_URL}/welcome-orb.svg`;
 
 // ── TYPEWRITER HOOK ──────────────────────────────────────────────
-// Uses a ref for the index to avoid stale-closure bugs that cause
-// characters to be read from the wrong position (e.g. "he" instead of "the")
 const useTypewriter = (text, speed = 18) => {
   const [displayText, setDisplayText] = useState('');
   const [isComplete, setIsComplete] = useState(false);
@@ -28,7 +26,7 @@ const useTypewriter = (text, speed = 18) => {
     const timer = setInterval(() => {
       const i = indexRef.current;
       if (i < text.length) {
-        setDisplayText(text.slice(0, i + 1)); // slice is safe — no closure over i
+        setDisplayText(text.slice(0, i + 1));
         indexRef.current = i + 1;
       } else {
         setIsComplete(true);
@@ -219,21 +217,23 @@ export default function App() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
   useEffect(() => { scrollToBottom(); }, [messages, scrollToBottom]);
+
+  // Lock viewport height so mobile keyboard can't shift the layout
   useEffect(() => {
-  const setHeight = () => {
-    document.documentElement.style.setProperty(
-      '--app-height',
-      `${window.innerHeight}px`
-    );
-  };
-  window.addEventListener('orientationchange', () => {
-    setTimeout(setHeight, 300); // small delay for orientation to settle
-  });
-  return () => {
-    window.removeEventListener('orientationchange', setHeight);
-  };
+    const setHeight = () => {
+      document.documentElement.style.setProperty(
+        '--app-height',
+        `${window.innerHeight}px`
+      );
+    };
+
+    setHeight(); // set immediately on mount
+
+    const handleOrientation = () => setTimeout(setHeight, 300);
+    window.addEventListener('orientationchange', handleOrientation);
+    return () => window.removeEventListener('orientationchange', handleOrientation);
   }, []);
-  setHeight();
+
   // Send
   const sendMessage = useCallback(async (text = input) => {
     const msg = typeof text === 'string' ? text : input;
@@ -267,6 +267,7 @@ export default function App() {
       }]);
     } finally {
       setLoading(false);
+      // Don't re-focus on mobile — it would reopen the keyboard unexpectedly
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (!isMobile) {
         setTimeout(() => inputRef.current?.focus(), 50);
