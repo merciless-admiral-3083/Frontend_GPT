@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/* ── RESET & BASE ── */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
@@ -38,7 +37,6 @@
 
 html {
   height: 100%;
-  /* Prevent the page from scrolling when keyboard opens on mobile */
   overflow: hidden;
   position: fixed;
   width: 100%;
@@ -48,7 +46,6 @@ body {
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
-  /* Use fixed height so keyboard doesn't push layout */
   height: 100%;
   width: 100%;
   position: fixed;
@@ -57,11 +54,9 @@ body {
   overscroll-behavior: none;
 }
 
-/* ── APP SHELL ── */
 .app {
   display: flex;
   flex-direction: column;
-  /* Use fixed pixel height via JS-set var, fallback to 100dvh */
   height: var(--app-height, 100dvh);
   position: relative;
   overflow: hidden;
@@ -70,7 +65,6 @@ body {
   transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* ── ANIMATED BACKGROUND ── */
 .app-bg {
   position: fixed;
   inset: 0;
@@ -96,7 +90,6 @@ body {
 @keyframes bgDrift1 { to { transform: translate(5%, 8%); } }
 @keyframes bgDrift2 { to { transform: translate(-5%, -8%); } }
 
-/* scan-line texture */
 .app-bg-grid {
   position: fixed;
   inset: 0;
@@ -108,7 +101,6 @@ body {
   background-size: 48px 48px;
 }
 
-/* ── NAV ── */
 .navbar {
   position: relative;
   z-index: 10;
@@ -217,7 +209,6 @@ body {
   background: rgba(239,68,68,0.08);
 }
 
-/* ── MAIN ── */
 .main-content {
   position: relative;
   z-index: 1;
@@ -231,7 +222,6 @@ body {
   padding: 0 1.5rem;
 }
 
-/* ── MESSAGES AREA ── */
 .messages-area {
   flex: 1;
   overflow-y: auto;
@@ -241,7 +231,6 @@ body {
   flex-direction: column;
   gap: 1.25rem;
   scroll-behavior: smooth;
-  /* Prevent overscroll bounce from hiding content behind keyboard on iOS */
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
 }
@@ -253,7 +242,6 @@ body {
 }
 .messages-area::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
 
-/* ── WELCOME SCREEN ── */
 .welcome {
   display: flex;
   flex-direction: column;
@@ -368,7 +356,6 @@ body {
 }
 .chip-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
 
-/* ── MESSAGES ── */
 .message {
   display: flex;
   width: 100%;
@@ -419,7 +406,6 @@ body {
   font-size: 0.9375rem;
   line-height: 1.65;
   position: relative;
-  /* Prevent text from overflowing on mobile */
   word-break: break-word;
   overflow-wrap: anywhere;
 }
@@ -451,7 +437,6 @@ body {
   50% { opacity: 0; }
 }
 
-/* ── METADATA ── */
 .message-meta {
   padding: 0 0.25rem;
   display: flex;
@@ -517,7 +502,6 @@ body {
   border: 1px solid var(--border);
 }
 
-/* ── SOURCES ── */
 .sources-toggle {
   display: flex;
   align-items: center;
@@ -584,7 +568,6 @@ body {
   font-weight: 600;
 }
 
-/* ── LOADING ── */
 .loading-msg {
   display: flex;
   align-items: flex-end;
@@ -621,7 +604,6 @@ body {
   font-family: var(--mono);
 }
 
-/* ── INPUT AREA ── */
 .input-zone {
   position: relative;
   z-index: 5;
@@ -652,7 +634,6 @@ body {
   font-family: var(--font);
   font-size: 0.9375rem;
   padding: 0.5rem 0;
-  /* Prevent iOS zoom on input focus */
   font-size: max(16px, 0.9375rem);
 }
 .chat-input::placeholder { color: var(--text-faint); }
@@ -675,7 +656,6 @@ body {
   transition: all 0.25s ease;
   flex-shrink: 0;
   box-shadow: 0 2px 12px rgba(56,189,248,0.25);
-  /* Ensure tap target is large enough on mobile */
   min-width: 42px;
   min-height: 42px;
 }
@@ -702,7 +682,6 @@ body {
   letter-spacing: 0.04em;
 }
 
-/* ── LIGHT THEME ── */
 .app.light {
   --bg:        #F0F4FA;
   --surface:   #FFFFFF;
@@ -735,18 +714,14 @@ body {
     linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
 }
 
-/* ── RESPONSIVE — TABLET ── */
 @media (max-width: 860px) {
   .main-content { max-width: 100%; }
 }
 
-/* ── RESPONSIVE — MOBILE ── */
 @media (max-width: 680px) {
-  /* Layout */
   .main-content { padding: 0 0.75rem; }
   .messages-area { padding: 1rem 0 0.5rem; gap: 1rem; }
 
-  /* Nav */
   .navbar { padding: 0 1rem; height: 56px; }
   .nav-center { display: none; }
   .nav-pill { display: none; }
@@ -756,7 +731,6 @@ body {
   .clear-nav-btn { padding: 0.35rem 0.7rem; font-size: 0.75rem; }
   .theme-btn { width: 32px; height: 32px; }
 
-  /* Welcome screen — fits without scrolling */
   .welcome {
     min-height: unset;
     padding: 1.25rem 0.25rem 0.5rem;
@@ -766,7 +740,6 @@ body {
     width: 80px; height: 80px;
     border-radius: 20px;
     margin-bottom: 1.25rem;
-    /* pause heavy animation on mobile for perf */
     animation-play-state: paused;
   }
   .welcome h2 { font-size: 1.5rem; margin-bottom: 0.4rem; }
@@ -791,15 +764,12 @@ body {
   }
   .chip-icon { font-size: 0.95rem; }
 
-  /* Messages */
   .message-row { max-width: 90%; gap: 0.5rem; }
   .message-bubble { padding: 0.75rem 1rem; font-size: 0.875rem; line-height: 1.6; }
   .msg-avatar { width: 26px; height: 26px; border-radius: 7px; font-size: 0.75rem; }
 
-  /* Input — stays put when keyboard opens */
   .input-zone {
     padding: 0.625rem 0 0.875rem;
-    /* Prevent keyboard from pushing this up */
     position: relative;
     z-index: 10;
   }
@@ -812,12 +782,10 @@ body {
   .send-btn { width: 38px; height: 38px; min-width: 38px; min-height: 38px; border-radius: 12px; }
   .input-hint { font-size: 0.65rem; margin-top: 0.5rem; }
 
-  /* Meta */
   .meta-tags { gap: 0.3rem; }
   .meta-tag { font-size: 0.6rem; padding: 0.15rem 0.5rem; }
 }
 
-/* ── EXTRA SMALL PHONES (< 380px) ── */
 @media (max-width: 380px) {
   .suggestions-grid { grid-template-columns: 1fr; }
   .welcome h2 { font-size: 1.25rem; }
@@ -826,7 +794,6 @@ body {
   .nav-brand gap { gap: 0.5rem; }
 }
 
-/* ── SHORT SCREENS (landscape phone) ── */
 @media (max-width: 680px) and (max-height: 600px) {
   .welcome { padding-top: 0.75rem; }
   .welcome-orb { width: 56px; height: 56px; margin-bottom: 0.875rem; }

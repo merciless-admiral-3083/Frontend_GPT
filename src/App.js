@@ -284,11 +284,9 @@ export default function App() {
 
   return (
     <div className={`app ${theme}`}>
-      {/* Background */}
       <div className="app-bg" />
       <div className="app-bg-grid" />
 
-      {/* NAV */}
       <nav className="navbar">
         <div className="nav-brand">
           <div className="brand-orb">🤖</div>
@@ -323,7 +321,6 @@ export default function App() {
         </div>
       </nav>
 
-      {/* MAIN */}
       <main className="main-content">
         <div className="messages-area">
           <AnimatePresence mode="popLayout">
@@ -352,7 +349,6 @@ export default function App() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* INPUT */}
         <div className="input-zone">
           <div className="input-wrapper">
             <input
