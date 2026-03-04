@@ -36,21 +36,33 @@
   --mono: 'JetBrains Mono', monospace;
 }
 
+html {
+  height: 100%;
+  /* Prevent the page from scrolling when keyboard opens on mobile */
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
 body {
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
-  height: 100vh;
-  /* Fix for mobile browsers that have dynamic toolbars */
-  height: 100dvh;
+  /* Use fixed height so keyboard doesn't push layout */
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overscroll-behavior: none;
 }
 
 /* ── APP SHELL ── */
 .app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: 100dvh; /* dynamic viewport height for mobile browsers */
+  /* Use fixed pixel height via JS-set var, fallback to 100dvh */
+  height: var(--app-height, 100dvh);
   position: relative;
   overflow: hidden;
   background: var(--bg);
@@ -784,8 +796,13 @@ body {
   .message-bubble { padding: 0.75rem 1rem; font-size: 0.875rem; line-height: 1.6; }
   .msg-avatar { width: 26px; height: 26px; border-radius: 7px; font-size: 0.75rem; }
 
-  /* Input */
-  .input-zone { padding: 0.625rem 0 0.875rem; }
+  /* Input — stays put when keyboard opens */
+  .input-zone {
+    padding: 0.625rem 0 0.875rem;
+    /* Prevent keyboard from pushing this up */
+    position: relative;
+    z-index: 10;
+  }
   .input-wrapper {
     padding: 0.375rem 0.375rem 0.375rem 1rem;
     border-radius: 18px;

@@ -219,7 +219,21 @@ export default function App() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
   useEffect(() => { scrollToBottom(); }, [messages, scrollToBottom]);
-
+  useEffect(() => {
+  const setHeight = () => {
+    document.documentElement.style.setProperty(
+      '--app-height',
+      `${window.innerHeight}px`
+    );
+  };
+  window.addEventListener('orientationchange', () => {
+    setTimeout(setHeight, 300); // small delay for orientation to settle
+  });
+  return () => {
+    window.removeEventListener('orientationchange', setHeight);
+  };
+  }, []);
+  setHeight();
   // Send
   const sendMessage = useCallback(async (text = input) => {
     const msg = typeof text === 'string' ? text : input;
@@ -253,7 +267,10 @@ export default function App() {
       }]);
     } finally {
       setLoading(false);
-      setTimeout(() => inputRef.current?.focus(), 50);
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (!isMobile) {
+        setTimeout(() => inputRef.current?.focus(), 50);
+      }
     }
   }, [input, loading]);
 
