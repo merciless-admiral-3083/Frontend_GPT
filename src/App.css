@@ -41,6 +41,8 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
   height: 100vh;
+  /* Fix for mobile browsers that have dynamic toolbars */
+  height: 100dvh;
 }
 
 /* ── APP SHELL ── */
@@ -48,6 +50,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  height: 100dvh; /* dynamic viewport height for mobile browsers */
   position: relative;
   overflow: hidden;
   background: var(--bg);
@@ -226,6 +229,9 @@ body {
   flex-direction: column;
   gap: 1.25rem;
   scroll-behavior: smooth;
+  /* Prevent overscroll bounce from hiding content behind keyboard on iOS */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 .messages-area::-webkit-scrollbar { width: 4px; }
 .messages-area::-webkit-scrollbar-track { background: transparent; }
@@ -401,6 +407,9 @@ body {
   font-size: 0.9375rem;
   line-height: 1.65;
   position: relative;
+  /* Prevent text from overflowing on mobile */
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 .user .message-bubble {
   background: var(--user-bg);
@@ -631,6 +640,8 @@ body {
   font-family: var(--font);
   font-size: 0.9375rem;
   padding: 0.5rem 0;
+  /* Prevent iOS zoom on input focus */
+  font-size: max(16px, 0.9375rem);
 }
 .chat-input::placeholder { color: var(--text-faint); }
 .chat-input:disabled { opacity: 0.5; }
@@ -652,6 +663,9 @@ body {
   transition: all 0.25s ease;
   flex-shrink: 0;
   box-shadow: 0 2px 12px rgba(56,189,248,0.25);
+  /* Ensure tap target is large enough on mobile */
+  min-width: 42px;
+  min-height: 42px;
 }
 .send-btn:hover:not(:disabled) {
   transform: scale(1.08);
@@ -709,12 +723,101 @@ body {
     linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
 }
 
-/* ── RESPONSIVE ── */
+/* ── RESPONSIVE — TABLET ── */
+@media (max-width: 860px) {
+  .main-content { max-width: 100%; }
+}
+
+/* ── RESPONSIVE — MOBILE ── */
 @media (max-width: 680px) {
-  .main-content { padding: 0 1rem; }
+  /* Layout */
+  .main-content { padding: 0 0.75rem; }
+  .messages-area { padding: 1rem 0 0.5rem; gap: 1rem; }
+
+  /* Nav */
+  .navbar { padding: 0 1rem; height: 56px; }
   .nav-center { display: none; }
-  .suggestions-grid { grid-template-columns: 1fr 1fr; }
-  .brand-text p { display: none; }
-  .message-row { max-width: 90%; }
   .nav-pill { display: none; }
+  .brand-text p { display: none; }
+  .brand-orb { width: 32px; height: 32px; font-size: 0.9rem; }
+  .brand-text h1 { font-size: 0.95rem; }
+  .clear-nav-btn { padding: 0.35rem 0.7rem; font-size: 0.75rem; }
+  .theme-btn { width: 32px; height: 32px; }
+
+  /* Welcome screen — fits without scrolling */
+  .welcome {
+    min-height: unset;
+    padding: 1.25rem 0.25rem 0.5rem;
+    justify-content: flex-start;
+  }
+  .welcome-orb {
+    width: 80px; height: 80px;
+    border-radius: 20px;
+    margin-bottom: 1.25rem;
+    /* pause heavy animation on mobile for perf */
+    animation-play-state: paused;
+  }
+  .welcome h2 { font-size: 1.5rem; margin-bottom: 0.4rem; }
+  .welcome-desc {
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    max-width: 100%;
+  }
+  .model-badge { font-size: 0.65rem; padding: 0.35rem 0.875rem; margin-bottom: 1.5rem; }
+  .suggestions-label { margin-bottom: 0.625rem; font-size: 0.7rem; }
+  .suggestions-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    max-width: 100%;
+  }
+  .suggestion-chip {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: var(--r-sm);
+    gap: 0.4rem;
+  }
+  .chip-icon { font-size: 0.95rem; }
+
+  /* Messages */
+  .message-row { max-width: 90%; gap: 0.5rem; }
+  .message-bubble { padding: 0.75rem 1rem; font-size: 0.875rem; line-height: 1.6; }
+  .msg-avatar { width: 26px; height: 26px; border-radius: 7px; font-size: 0.75rem; }
+
+  /* Input */
+  .input-zone { padding: 0.625rem 0 0.875rem; }
+  .input-wrapper {
+    padding: 0.375rem 0.375rem 0.375rem 1rem;
+    border-radius: 18px;
+    gap: 0.5rem;
+  }
+  .chat-input { padding: 0.4rem 0; }
+  .send-btn { width: 38px; height: 38px; min-width: 38px; min-height: 38px; border-radius: 12px; }
+  .input-hint { font-size: 0.65rem; margin-top: 0.5rem; }
+
+  /* Meta */
+  .meta-tags { gap: 0.3rem; }
+  .meta-tag { font-size: 0.6rem; padding: 0.15rem 0.5rem; }
+}
+
+/* ── EXTRA SMALL PHONES (< 380px) ── */
+@media (max-width: 380px) {
+  .suggestions-grid { grid-template-columns: 1fr; }
+  .welcome h2 { font-size: 1.25rem; }
+  .welcome-desc { font-size: 0.775rem; }
+  .message-row { max-width: 95%; }
+  .nav-brand gap { gap: 0.5rem; }
+}
+
+/* ── SHORT SCREENS (landscape phone) ── */
+@media (max-width: 680px) and (max-height: 600px) {
+  .welcome { padding-top: 0.75rem; }
+  .welcome-orb { width: 56px; height: 56px; margin-bottom: 0.875rem; }
+  .welcome h2 { font-size: 1.1rem; }
+  .welcome-desc { display: none; }
+  .model-badge { margin-bottom: 1rem; font-size: 0.6rem; }
+  .suggestions-grid { grid-template-columns: repeat(3, 1fr); gap: 0.4rem; }
+  .suggestion-chip { padding: 0.5rem 0.625rem; font-size: 0.7rem; }
+  .messages-area { padding: 0.5rem 0 0.25rem; gap: 0.75rem; }
+  .input-zone { padding: 0.375rem 0 0.5rem; }
 }
